@@ -1,0 +1,24 @@
+﻿<launch>
+   <arg name="connect_on_startup"   default="true"/>
+    <arg name="calibrate_on_startup" default="true"/>
+    <arg name="engage_on_startup"    default="true"/>
+
+    <arg name="publish_odom"   default="true"/>
+    <arg name="publish_tf"     default="true"/>
+    
+    <node pkg="odrive_ros" type="odrive_node" name="odrive" output="screen" ns="odrive">
+        <param name="wheel_track" value="0.285"/>
+        <param name="tyre_circumference" value="0.341"/>
+        
+        <param name="connect_on_startup"   value="$(arg connect_on_startup)"/>
+        <param name="calibrate_on_startup" value="$(arg calibrate_on_startup)"/>
+        <param name="engage_on_startup"    value="$(arg engage_on_startup)"/>
+        
+        <param name="publish_odom"    value="$(arg publish_odom)"/>
+        <param name="publish_tf"      value="$(arg publish_tf)"/>
+	<param name="publish_tf"      value="$(arg publish_tf)"/>
+	<param name="publish_joint_state"      value="true"/>
+	<param name="joint_state_topic"      value="/joint_state"/>
+	<param name="Calibrate_Axis"      value="1"/>
+    </node>
+</launch>
