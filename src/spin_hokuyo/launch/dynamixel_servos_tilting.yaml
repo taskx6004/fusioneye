@@ -6,11 +6,9 @@ tilt_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: tilt_joint
-    joint_speed: 0.5
+    joint_speed: 0.1
     motor:
         id: 1
         init: 2028
         min: 0
-        max: 4056
-
-
+        max: 4096
