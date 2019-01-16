@@ -288,8 +288,8 @@ class ODriveNode(object):
         #left_linear_rpm  = (msg.linear.x - angular_to_linear) * m_s_to_erpm
         #right_linear_rpm = (msg.linear.x + angular_to_linear) * m_s_to_erpm
         
-        x = max(min(msg.data * self.sweep_factor, self.max_speed),   -self.max_speed)
-        z = max(min(msg.data * self.sweep_factor, self.max_angular), -self.max_angular)
+        x = max(min(msg.data, self.max_speed),   -self.max_speed)
+        z = max(min(msg.data, self.max_angular), -self.max_angular)
         
         left_linear_val, right_linear_val = self.convert(x,z)
         
@@ -304,7 +304,7 @@ class ODriveNode(object):
         #wheel_right.set_speed(v_r)
         
         rospy.logdebug("Driving left: %d, right: %d, from linear.x %.2f and angular.z %.2f" % (left_linear_val, right_linear_val, msg.data * self.sweep_factor, msg.data * self.sweep_factor))
-        self.driver.drive(left_linear_val, right_linear_val)
+        self.driver.drive(left_linear_val * self.sweep_factor, right_linear_val * self.sweep_factor)
 
         self.last_speed = max(abs(left_linear_val), abs(right_linear_val))
 	dt = 0.0
