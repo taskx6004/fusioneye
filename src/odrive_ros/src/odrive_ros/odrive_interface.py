@@ -175,10 +175,10 @@ class ODriveInterfaceAPI(object):
         
         for i, axis in enumerate(self.axes):
 	    if self.calibrate_axis == 1:
-	    	if i > 0:
+	    	if i == 0:
 		    break
 	    else:
-		if i == 0:
+		if i > 0:
 		    break
 
             self.logger.info("Calibrating axis %d..." % i)
