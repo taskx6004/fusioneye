@@ -92,6 +92,8 @@ class ODriveNode(object):
 	self.Calibrate_Axis    = rospy.get_param('~Calibrate_Axis', 1)
 	self.motor_id    = rospy.get_param('~motor_id', "0")
 	self.sweep_factor    = rospy.get_param('~sweep_factor', 0.2)
+	self.continuous_spin = rospy.get_param('~continuous_spin', False);
+	self.continuous_speed = rospy.get_param('~continuous_speed', 0.5);
         
         rospy.on_shutdown(self.terminate)
 
@@ -304,7 +306,10 @@ class ODriveNode(object):
         #wheel_right.set_speed(v_r)
         
         rospy.logdebug("Driving left: %d, right: %d, from linear.x %.2f and angular.z %.2f" % (left_linear_val, right_linear_val, msg.data * self.sweep_factor, msg.data * self.sweep_factor))
-        self.driver.drive(left_linear_val * self.sweep_factor, right_linear_val * self.sweep_factor)
+        if not self.continuous_spin:
+		self.driver.drive(left_linear_val * self.sweep_factor, right_linear_val * self.sweep_factor)
+	else:
+		self.driver.drive(self.continuous_speed, self.continuous_speed)
 
         self.last_speed = max(abs(left_linear_val), abs(right_linear_val))
 	dt = 0.0
